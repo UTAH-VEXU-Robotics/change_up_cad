@@ -9,13 +9,25 @@
             <mesh><uri>file://models/change_up_cad/ChangeUpBallRed/ChangeUpBallRed.dae</uri></mesh>
           </geometry>
         </visual>
-	 <collision name = "collision">
-         <geometry>
+	      <collision name = "collision">
+          <geometry>
             <sphere>
                <radius>.08001</radius>
             </sphere>
-         </geometry>
-       </collision>
+          </geometry>
+        </collision>
+        <inertial>
+          <pose>0 0 0.0 0 0 0</pose>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0.0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <mass>0.168</mass>
+        </inertial>
       </link>
     </model>
 </sdf>
