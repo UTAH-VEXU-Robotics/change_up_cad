@@ -1,0 +1,184 @@
+<?xml version="1.0"?>
+
+<robot name="visual">
+  <link name="chassis">
+    <origin xyz="0 0 0.15 " rpy=" 0 0 0"/>
+
+    <inertial>
+        <origin xyz="0 0 ${height1/2}" rpy="0 0 0"/>
+        <mass value="1"/>
+        <inertia
+          ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0"/>
+      </inertial>
+
+    <visual>
+      <geometry>
+        <mesh filename="package://gazeboSimulation/models/VexRobot/chassis.dae"</uri></mesh>
+      </geometry>
+    </visual>
+
+    <collision name='collision'>
+      <geometry>
+        <mesh filename="package://gazeboSimulation/models/Collisions/ChassisCollision.dae"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="leftFrontWheel">
+
+    <origin xyz="-0.17 -0.14 .13 " rpy=" 0 0 0"/>
+
+    <inertial>
+        <origin xyz="0 0 ${height1/2}" rpy="0 0 0"/>
+        <mass value="1"/>
+        <inertia
+          ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0"/>
+      </inertial>
+
+    <collision name='collision'>
+      <geometry>
+        <mesh filename="package://gazeboSimulation/models/Collisions/OmniWheelCollision.dae"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <geometry>
+        <mesh filename="package://gazeboSimulation/models/VexRobot/OmniWheel.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="leftFrontHinge" type="revolute">
+    <origin xyz="0 0 0.05" rpy=" 0 0 0"/>
+    <parent link="chassis"/>
+    <child link="leftFrontWheel"/>
+    <limit effort="1.0" lower="0" upper="6" velocity="1.0"/>
+    <axis xyz = "0 1 0"/>
+  </joint>
+
+  <link name="rightFrontWheel">
+
+    <origin xyz="-0.17 0.13 .13" rpy=" 0 0 0"/>
+
+    <inertial>
+        <origin xyz="0 0 ${height1/2}" rpy="0 0 0"/>
+        <mass value="1"/>
+        <inertia
+          ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0"/>
+      </inertial>
+
+    <collision name='collision'>
+      <geometry>
+        <mesh filename="package://gazeboSimulation/models/Collisions/OmniWheelCollision.dae"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <geometry>
+        <mesh filename="package://gazeboSimulation/models/VexRobot/OmniWheel.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="rightFrontHinge" type="revolute">
+    <origin xyz="0 0 0.05" rpy=" 0 0 0"/>
+    <parent link="chassis"/>
+    <child link="rightFrontWheel"/>
+    <limit effort="1.0" lower="0" upper="6" velocity="1.0"/>
+    <axis xyz = "0 1 0"/>
+  </joint>
+
+  <link name="leftBackWheel">
+
+    <origin xyz="0.12 -0.15 .13 " rpy=" 0 0 0"/>
+
+    <inertial>
+        <origin xyz="0 0 ${height1/2}" rpy="0 0 0"/>
+        <mass value="1"/>
+        <inertia
+          ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0"/>
+      </inertial>
+
+    <collision name='collision'>
+      <geometry>
+        <mesh filename="package://gazeboSimulation/models/Collisions/OmniWheelCollision.dae"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <geometry>
+        <mesh filename="package://gazeboSimulation/models/VexRobot/OmniWheel.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="leftBackHinge" type="revolute">
+    <origin xyz="0 0 0.05" rpy=" 0 0 0"/>
+    <parent link="chassis"/>
+    <child link="leftBackWheel"/>
+    <limit effort="1.0" lower="0" upper="6" velocity="1.0"/>
+    <axis xyz = "0 1 0"/>
+  </joint>
+
+  <link name="rightBackWheel">
+
+    <origin xyz="0.12 0.13 .13" rpy=" 0 0 0"/>
+
+    <inertial>
+        <origin xyz="0 0 ${height1/2}" rpy="0 0 0"/>
+        <mass value="1"/>
+        <inertia
+          ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0"/>
+      </inertial>
+
+    <collision name='collision'>
+      <geometry>
+        <mesh filename="package://gazeboSimulation/models/Collisions/OmniWheelCollision.dae"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <geometry>
+        <mesh filename="package://gazeboSimulation/models/VexRobot/OmniWheel.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="rightBackHinge" type="revolute">
+    <origin xyz="0 0 0.05" rpy=" 0 0 0"/>
+    <parent link="chassis"/>
+    <child link="rightBackWheel"/>
+    <limit effort="1.0" lower="0" upper="6" velocity="1.0"/>
+    <axis xyz = "0 1 0"/>
+  </joint>
+
+
+  <!-- Gazebo plugin for ROS Control -->
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/</robotNamespace>
+        </plugin>
+        <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
+          <alwaysOn>true</alwaysOn>
+          <updateRate>50.0</updateRate>
+          <bodyName>chassis_link</bodyName>
+          <topicName>ground_truth/state</topicName>
+          <gaussianNoise>0.01</gaussianNoise>
+          <frameName>world</frameName>
+          <xyzOffsets>0 0 0</xyzOffsets>
+          <rpyOffsets>0 0 0</rpyOffsets>
+        </plugin>
+    </gazebo>
+
+
+</robot>
